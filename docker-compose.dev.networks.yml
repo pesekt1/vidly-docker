@@ -1,0 +1,47 @@
+version: "3.8"
+
+services:
+  frontend:
+    depends_on:
+      - backend
+    build: ./frontend
+    ports:
+      - 3000:3000
+    environment:
+      WATCHPACK_POLLING: "true"
+      CHOKIDAR_USEPOLLING: "true"
+    volumes:
+      - ./frontend:/app
+    networks:
+      - frontend_network
+
+  backend:
+    depends_on:
+      - db
+    build: ./backend
+    ports:
+      - 3001:3001
+    environment:
+      DB_URL: mongodb://db/vidlyDocker
+    volumes:
+      - ./backend:/app
+    command: ./docker-entrypoint.sh
+    networks:
+      - backend_network
+      - frontend_network
+
+  db:
+    image: mongo:4.0-xenial
+    ports:
+      - 27017:27017
+    volumes:
+      - vidly:/data/db
+    networks:
+      - backend_network
+
+volumes:
+  vidly:
+
+networks:
+  frontend_network:
+  backend_network:

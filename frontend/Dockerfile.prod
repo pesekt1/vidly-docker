@@ -8,7 +8,7 @@ RUN npm run build
 
 # Step 2: Production stage
 FROM nginx:1.19.6-alpine
-RUN addgroup app && adduser -S -G app app
+# RUN addgroup app && adduser -S -G app app
 # USER app
 COPY --from=build-stage /app/build /usr/share/nginx/html
 EXPOSE 80 

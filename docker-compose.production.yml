@@ -2,23 +2,23 @@ version: "3.8"
 
 services:
   frontend:
-    depends_on: 
+    depends_on:
       - backend
-    build: 
+    build:
       context: ./frontend
       dockerfile: Dockerfile.prod
     ports:
       - 80:80
     restart: unless-stopped
 
-  backend: 
-    depends_on: 
+  backend:
+    depends_on:
       - db
     build: ./backend
-    ports: 
+    ports:
       - 3001:3001
-    environment: 
-      DB_URL: mongodb://db/vidlyDocker
+    environment:
+      DB_URL: mongodb://db/vidly
     command: ./docker-entrypoint.sh
     restart: unless-stopped
 

@@ -3,32 +3,32 @@ version: "3.8"
 services:
   frontend_test:
     image: vidly-docker-frontend
-    depends_on: 
+    depends_on:
       - backend
     volumes:
       - ./frontend:/app
     command: npm test
   frontend:
-    depends_on: 
+    depends_on:
       - backend
     build: ./frontend
     ports:
       - 3000:3000
-    environment: 
+    environment:
       WATCHPACK_POLLING: "true"
       CHOKIDAR_USEPOLLING: "true"
     volumes:
       - ./frontend:/app
 
-  backend: 
-    depends_on: 
+  backend:
+    depends_on:
       - db
     build: ./backend
-    ports: 
+    ports:
       - 3001:3001
-    environment: 
-      DB_URL: mongodb://db/vidlyDocker
-    volumes: 
+    environment:
+      DB_URL: mongodb://db/vidly
+    volumes:
       - ./backend:/app
     command: ./docker-entrypoint.sh
 
@@ -41,4 +41,3 @@ services:
 
 volumes:
   vidly:
-
